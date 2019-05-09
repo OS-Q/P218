@@ -19,7 +19,7 @@ Edge-Q -> 体系 Q[1,4] -> 节点 M[1,12] -> 平台 W[1,52] -> 设备 D[1,365]
 	* W23：[接收网关](https://github.com/OS-Q/W23)
 	* W24：[集成网关](https://github.com/OS-Q/W24)
 	* W25：[入网网关](https://github.com/OS-Q/W25)
-	* W26：[服务网关](https://github.com/OS-Q/W26)
+	* W26：服务网关
 		* D176：[数据缓存](https://github.com/OS-Q/D176)
 		* D177：[安全强化](https://github.com/OS-Q/D177)
 		* D178：[通道扩展](https://github.com/OS-Q/D178)
