@@ -1,32 +1,15 @@
-﻿# [服务网关](https://github.com/OS-Q/W26) 
-[![sites](OS-Q/OS-Q.png)](http://www.OS-Q.com)
-####  qitas@qitas.cn
-#### 归属通信网关：[M6](https://github.com/OS-Q/M6)
-#### 关于系统架构：[OS-Q](https://github.com/OS-Q/OS-Q)
-Edge-Q -> 体系 Q[1,4] -> 节点 M[1,12] -> 平台 W[1,52] -> 设备 D[1,365]
-### [平台描述](https://github.com/OS-Q/W26/wiki) 
+﻿# [AT master](https://github.com/OS-Q/W26) 
+[![sites](http://182.61.61.133/link/resources/OSQ.png)](http://www.OS-Q.com)
 
-服务网关
+* Q[4] - M[12] - W[52] - D[365] - H[24] - N[60] - S[60]
 
-### [平台资源](https://github.com/OS-Q/W26) 
+### [workspace描述](https://github.com/OS-Q/W26/wiki) 
 
-- [资源](src/)
-- [文档](docs/)
+[AT master](https://github.com/OS-Q/W26) 用于构建基于AT控制型主机设备的工程范本
 
-### [平台结构](https://github.com/OS-Q/W26) 
+### [可集成功能库](https://github.com/OS-Q)
 
-* M6：[通信网关](https://github.com/OS-Q/M6)
-	* W23：[接收网关](https://github.com/OS-Q/W23)
-	* W24：[集成网关](https://github.com/OS-Q/W24)
-	* W25：[入网网关](https://github.com/OS-Q/W25)
-	* W26：服务网关
-		* D176：[数据缓存](https://github.com/OS-Q/D176)
-		* D177：[安全强化](https://github.com/OS-Q/D177)
-		* D178：[通道扩展](https://github.com/OS-Q/D178)
-		* D179：[状态监控](https://github.com/OS-Q/D179)
-		* D180：[信息查询](https://github.com/OS-Q/D180)
-		* D181：[NULL](https://github.com/OS-Q/D181)
-		* D182：[NULL](https://github.com/OS-Q/D182)
+* JSON
+* DB
 
-### [OS-Q : Operation System for edge devices](http://www.OS-Q.com/Edge/W26)
-####  2019-5-9
+### [OS-Q = Open Solutions | Open Source | Operating System ](http://www.OS-Q.com/W26)
