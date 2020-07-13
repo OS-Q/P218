@@ -1,4 +1,3 @@
-
 #include "ATC.h"
 #include "ATCConfig.h"
 
@@ -20,7 +19,7 @@ void  ATC_RxCallBack(uint8_t  ID)
     {
       ATC[ID].Buff.RxData[ATC[ID].Buff.RxIndex]=ATC[ID].Buff.RxTmp;
       ATC[ID].Buff.RxIndex++;
-    }    
+    }
   }
   HAL_UART_Receive_IT(ATC[ID].uart,&ATC[ID].Buff.RxTmp,1);
 }
@@ -32,25 +31,25 @@ void  ATC_TransmitString(uint8_t  ID,char *Buff)
   if(ATC[ID].RS485_Ctrl_Pin != 0)
   {
     HAL_GPIO_WritePin(ATC[ID].RS485_Ctrl_GPIO,ATC[ID].RS485_Ctrl_Pin,GPIO_PIN_SET);
-    osDelay(1);  
+    osDelay(1);
   }
   HAL_UART_Receive_IT(ATC[ID].uart,&ATC[ID].Buff.RxTmp,1);
   if(ATC[0].uart->hdmatx!=NULL)
   {
     while(ATC[0].uart->hdmatx->State != HAL_DMA_STATE_READY)
-      osDelay(1);    
+      osDelay(1);
     HAL_UART_Transmit_DMA(ATC[0].uart,(uint8_t*)Buff,strlen(Buff));
     while(ATC[0].uart->hdmatx->State != HAL_DMA_STATE_READY)
-      osDelay(1);    
+      osDelay(1);
   }
   else
   {
-    HAL_UART_Transmit(ATC[0].uart,(uint8_t*)Buff,strlen(Buff),100);    
+    HAL_UART_Transmit(ATC[0].uart,(uint8_t*)Buff,strlen(Buff),100);
   }
   if(ATC[ID].RS485_Ctrl_Pin != 0)
   {
     HAL_GPIO_WritePin(ATC[ID].RS485_Ctrl_GPIO,ATC[ID].RS485_Ctrl_Pin,GPIO_PIN_RESET);
-    osDelay(1);  
+    osDelay(1);
   }
 }
 //###################################################################################
@@ -68,7 +67,7 @@ uint8_t  ATC_Send(uint8_t  ID,char *AtCommand,uint32_t Wait_ms,uint8_t  ArgCount
   memset(arg,0,sizeof(arg));
   for(uint8_t i=0; i<ArgCount ; i++)
   {
-    arg[i] = va_arg (tag, char*);  
+    arg[i] = va_arg (tag, char*);
   }
   for(uint8_t i=0; i<ArgCount ; i++)
     strncpy(ATC[ID].Answer[i],arg[i],sizeof(ATC[ID].Answer[i]));
@@ -87,9 +86,9 @@ uint8_t  ATC_Send(uint8_t  ID,char *AtCommand,uint32_t Wait_ms,uint8_t  ArgCount
       #endif
       memset(ATC[ID].Answer,0,sizeof(ATC[ID].Answer));
       ATC[ID].Busy=0;
-      return ATC[ID].AnswerFound;      
+      return ATC[ID].AnswerFound;
     }
-    osDelay(1);  
+    osDelay(1);
   }
   memset(ATC[ID].Answer,0,sizeof(ATC[ID].Answer));
   #if(_ATC_DEBUG==1)
@@ -101,7 +100,7 @@ uint8_t  ATC_Send(uint8_t  ID,char *AtCommand,uint32_t Wait_ms,uint8_t  ArgCount
 //###################################################################################
 char *     ATC_GetAnswer(uint8_t ID)
 {
-  return (char*)ATC[ID].Buff.RxDataBackup;  
+  return (char*)ATC[ID].Buff.RxDataBackup;
 }
 //###################################################################################
 uint16_t  ATC_AddAutoSearchString(uint8_t  ID,char *String)
@@ -116,7 +115,7 @@ uint16_t  ATC_AddAutoSearchString(uint8_t  ID,char *String)
   if(ATC[ID].AutoSearchString[ATC[ID].AutoSearchIndex]==NULL)
     return 0;
   strcpy(ATC[ID].AutoSearchString[ATC[ID].AutoSearchIndex],String);
-  ATC[ID].AutoSearchIndex++;  
+  ATC[ID].AutoSearchIndex++;
   return ATC[ID].AutoSearchIndex;
 }
 //###################################################################################
@@ -133,8 +132,8 @@ void  ATC_AutoSearch(uint8_t  ID)
       printf("[%s] Found Auto index: %d: String:%s\r\n",ATC[ID].Name,idx,ATC[ID].AutoSearchString[idx]);
       #endif
       ATC_User_AutoSearchCallBack(ID,idx,ATC[ID].AutoSearchString[idx],str);
-    }    
-  }  
+    }
+  }
 }
 //###################################################################################
 bool  ATC_Init(uint8_t  ID,char  *Name,UART_HandleTypeDef *SelectUart,uint16_t  RxSize,uint8_t  Timeout_Package,osPriority Priority)
@@ -152,7 +151,7 @@ bool  ATC_Init(uint8_t  ID,char  *Name,UART_HandleTypeDef *SelectUart,uint16_t  
   ATC[ID].Buff.RxData = pvPortMalloc(RxSize);
   ATC[ID].Buff.RxDataBackup = pvPortMalloc(RxSize);
   ATC[ID].Buff.RxSize=RxSize;
-  ATC[ID].Buff.Timeout=Timeout_Package;    
+  ATC[ID].Buff.Timeout=Timeout_Package;
   if((ATC[ID].Buff.RxData==NULL) || (ATC[ID].Buff.RxDataBackup==NULL))
   {
     #if(_ATC_DEBUG==1)
@@ -160,7 +159,7 @@ bool  ATC_Init(uint8_t  ID,char  *Name,UART_HandleTypeDef *SelectUart,uint16_t  
     #endif
     return false;
   }
-  else  
+  else
   {
     HAL_UART_Receive_IT(ATC[ID].uart,&ATC[ID].Buff.RxTmp,1);
     ATC_ID++;
@@ -175,7 +174,7 @@ bool  ATC_Init(uint8_t  ID,char  *Name,UART_HandleTypeDef *SelectUart,uint16_t  
         #endif
         memset(&ATC[ID],0,sizeof(ATC[ID]));
         return false;
-      }    
+      }
     }
     #if(_ATC_DEBUG==1)
     printf("[%s] Init Done\r\n",ATC[ID].Name);
@@ -189,7 +188,7 @@ void ATC_InitRS485(uint8_t  ID,GPIO_TypeDef *RS485_GPIO,uint16_t RS485_PIN)
   if(ID>=_ATC_MAX_DEVICE)
     return;
   ATC[ID].RS485_Ctrl_GPIO = RS485_GPIO;
-  ATC[ID].RS485_Ctrl_Pin = RS485_PIN;  
+  ATC[ID].RS485_Ctrl_Pin = RS485_PIN;
   HAL_GPIO_WritePin(ATC[ID].RS485_Ctrl_GPIO,ATC[ID].RS485_Ctrl_Pin,GPIO_PIN_RESET);
   #if(_ATC_DEBUG==1)
   printf("[%s] Init ATC RS485 Done\r\n",ATC[ID].Name);
@@ -197,13 +196,13 @@ void ATC_InitRS485(uint8_t  ID,GPIO_TypeDef *RS485_GPIO,uint16_t RS485_PIN)
 }
 //###################################################################################
 void StartATCBuffTask(void const *argument)
-{    
+{
   while(1)
   {
     for(uint8_t MX=0 ; MX<_ATC_MAX_DEVICE ; MX++)
     {
       if(&ATC[MX] != NULL)
-      {      
+      {
         if((ATC[MX].Buff.RxIndex>0) && ((HAL_GetTick()-ATC[MX].Buff.RxTime)>ATC[MX].Buff.Timeout))
         {
           ATC[MX].Buff.RxBusy=1;
@@ -218,9 +217,9 @@ void StartATCBuffTask(void const *argument)
                 memset(ATC[MX].Buff.RxDataBackup,0,ATC[MX].Buff.RxSize);
                 strcpy((char*)ATC[MX].Buff.RxDataBackup,(char*)ATC[MX].Buff.RxData);
                 break;
-              }              
-            }            
-          }          
+              }
+            }
+          }
           //------   Search in atcommands answer
           //++++++  Auto Search String
           ATC_AutoSearch(MX);
@@ -232,7 +231,7 @@ void StartATCBuffTask(void const *argument)
           ATC[MX].Buff.RxIndex=0;
           ATC[MX].Buff.RxBusy=0;
         }
-      }    
+      }
     }
     osDelay(10);
   }

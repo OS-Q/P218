@@ -15,35 +15,31 @@
 typedef struct
 {
 	uint8_t		*RxData;
-  	uint8_t		*RxDataBackup;
+  uint8_t		*RxDataBackup;
 	uint8_t		RxTmp;
 	uint16_t	RxIndex;
 	uint16_t	RxSize;
 	uint32_t	RxTime;
 	uint8_t		Timeout;
 	uint8_t		RxBusy;
-	
 }ATC_Buff_t;
-//########
+
 typedef struct
 {
   uint8_t               ID;
   uint8_t               Busy;
   char                  Name[16];
   UART_HandleTypeDef    *uart;
-  ATC_Buff_t            Buff;	
+  ATC_Buff_t            Buff;
   char                  Answer[_ATC_MAX_SEARCH_PARAMETER_FOR_AT_ANSWER][32];
   uint8_t               AnswerFound;
   uint8_t               AutoSearchIndex;
   char                  *AutoSearchString[_ATC_MAX_AUTO_SEARCH_STRING];
   GPIO_TypeDef          *RS485_Ctrl_GPIO;
   uint16_t              RS485_Ctrl_Pin;
-  
 }ATC_t;
-//########
 
 //###################################################################################
-
 //        add to Uart interrupt after HAL_UART_IRQHandler(&huartx);
 void      ATC_RxCallBack(uint8_t  ID);
 
@@ -56,7 +52,7 @@ void      ATC_InitRS485(uint8_t  ID,GPIO_TypeDef *RS485_GPIO,uint16_t RS485_PIN)
 //        tranmit string
 void      ATC_TransmitString(uint8_t  ID,char *Buff);
 
-//        send AtCommand and wait for answer. return 0 timeout,return	>0 parameter number found   
+//        send AtCommand and wait for answer. return 0 timeout,return	>0 parameter number found
 uint8_t   ATC_Send(uint8_t  ID,char *AtCommand,uint32_t Wait_ms,uint8_t	ArgCount,...);
 
 //        get rx buffer after send AtCommands
