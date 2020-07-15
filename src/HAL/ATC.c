@@ -1,29 +1,27 @@
+/**
+********************************************************************************
+****版本：v1.0.0
+****平台：STM32
+****日期：2020-07-15
+****作者：Qitas
+********************************************************************************
+*/
+
 #include "ATC.h"
 #include "ATCConfig.h"
 
-int8_t        ATC_ID=-1;
-ATC_t         ATC[_ATC_MAX_DEVICE];
+int8_t ATC_ID=-1;
+ATC_t ATC[_ATC_MAX_DEVICE];
 
-osThreadId    ATCBuffTaskHandle;
-void          StartATCBuffTask(void const *argument);
+osThreadId ATCBuffTaskHandle;
 
-//###################################################################################
-void  ATC_RxCallBack(uint8_t  ID)
-{
-  if(ID>=_ATC_MAX_DEVICE)
-    return;
-  if((ATC[ID].uart->ErrorCode==0) && (ATC[ID].Buff.RxBusy==0))
-  {
-    ATC[ID].Buff.RxTime=HAL_GetTick();
-    if(ATC[ID].Buff.RxIndex < ATC[ID].Buff.RxSize-1)
-    {
-      ATC[ID].Buff.RxData[ATC[ID].Buff.RxIndex]=ATC[ID].Buff.RxTmp;
-      ATC[ID].Buff.RxIndex++;
-    }
-  }
-  HAL_UART_Receive_IT(ATC[ID].uart,&ATC[ID].Buff.RxTmp,1);
-}
-//###################################################################################
+
+/********************************************************************************
+**函数信息 ：
+**功能描述 ：
+**输入参数 ：无
+**输出参数 ：无
+********************************************************************************/
 void  ATC_TransmitString(uint8_t  ID,char *Buff)
 {
   if(ID>=_ATC_MAX_DEVICE)
@@ -52,7 +50,12 @@ void  ATC_TransmitString(uint8_t  ID,char *Buff)
     osDelay(1);
   }
 }
-//###################################################################################
+/********************************************************************************
+**函数信息 ：
+**功能描述 ：
+**输入参数 ：无
+**输出参数 ：无
+********************************************************************************/
 uint8_t  ATC_Send(uint8_t  ID,char *AtCommand,uint32_t Wait_ms,uint8_t  ArgCount,...)
 {
   if(ID>=_ATC_MAX_DEVICE)
@@ -97,29 +100,40 @@ uint8_t  ATC_Send(uint8_t  ID,char *AtCommand,uint32_t Wait_ms,uint8_t  ArgCount
   ATC[ID].Busy=0;
   return 0;
 }
-//###################################################################################
-char *     ATC_GetAnswer(uint8_t ID)
+/********************************************************************************
+**函数信息 ：
+**功能描述 ：
+**输入参数 ：无
+**输出参数 ：无
+********************************************************************************/
+char * ATC_GetAnswer(uint8_t ID)
 {
   return (char*)ATC[ID].Buff.RxDataBackup;
 }
-//###################################################################################
-uint16_t  ATC_AddAutoSearchString(uint8_t  ID,char *String)
+/********************************************************************************
+**函数信息 ：
+**功能描述 ：
+**输入参数 ：无
+**输出参数 ：无
+********************************************************************************/
+uint16_t  ATC_AddAutoSearchString(uint8_t ID,char *String)
 {
-  if(ID>=_ATC_MAX_DEVICE)
-    return 0;
-  if(String==NULL)
-    return 0;
-  if(ATC[ID].AutoSearchIndex == _ATC_MAX_AUTO_SEARCH_STRING-1)
-    return 0;
+  if(ID>=_ATC_MAX_DEVICE)  return 0;
+  if(String==NULL)  return 0;
+  if(ATC[ID].AutoSearchIndex == _ATC_MAX_AUTO_SEARCH_STRING-1)  return 0;
   ATC[ID].AutoSearchString[ATC[ID].AutoSearchIndex] = calloc(strlen(String)+1,1);
-  if(ATC[ID].AutoSearchString[ATC[ID].AutoSearchIndex]==NULL)
-    return 0;
+  if(ATC[ID].AutoSearchString[ATC[ID].AutoSearchIndex]==NULL)  return 0;
   strcpy(ATC[ID].AutoSearchString[ATC[ID].AutoSearchIndex],String);
   ATC[ID].AutoSearchIndex++;
   return ATC[ID].AutoSearchIndex;
 }
-//###################################################################################
-void  ATC_AutoSearch(uint8_t  ID)
+/********************************************************************************
+**函数信息 ：
+**功能描述 ：
+**输入参数 ：无
+**输出参数 ：无
+********************************************************************************/
+void ATC_AutoSearch(uint8_t  ID)
 {
   if(ID>=_ATC_MAX_DEVICE)
     return;
@@ -135,8 +149,29 @@ void  ATC_AutoSearch(uint8_t  ID)
     }
   }
 }
-//###################################################################################
-bool  ATC_Init(uint8_t  ID,char  *Name,UART_HandleTypeDef *SelectUart,uint16_t  RxSize,uint8_t  Timeout_Package,osPriority Priority)
+/********************************************************************************
+**函数信息 ：
+**功能描述 ：
+**输入参数 ：无
+**输出参数 ：无
+********************************************************************************/
+void ATC_InitRS485(uint8_t ID,GPIO_TypeDef *RS485_GPIO,uint16_t RS485_PIN)
+{
+  if(ID>=_ATC_MAX_DEVICE)  return;
+  ATC[ID].RS485_Ctrl_GPIO = RS485_GPIO;
+  ATC[ID].RS485_Ctrl_Pin = RS485_PIN;
+  HAL_GPIO_WritePin(ATC[ID].RS485_Ctrl_GPIO,ATC[ID].RS485_Ctrl_Pin,GPIO_PIN_RESET);
+  #if(_ATC_DEBUG==1)
+  printf("[%s] Init ATC RS485 Done\r\n",ATC[ID].Name);
+  #endif
+}
+/********************************************************************************
+**函数信息 ：
+**功能描述 ：
+**输入参数 ：无
+**输出参数 ：无
+********************************************************************************/
+bool ATC_Init(uint8_t ID,char *Name,UART_HandleTypeDef *SelectUart,uint16_t RxSize,uint8_t Timeout_Package,osPriority Priority)
 {
   if(ID>=_ATC_MAX_DEVICE)
   {
@@ -182,19 +217,13 @@ bool  ATC_Init(uint8_t  ID,char  *Name,UART_HandleTypeDef *SelectUart,uint16_t  
     return true;
   }
 }
-//###################################################################################
-void ATC_InitRS485(uint8_t  ID,GPIO_TypeDef *RS485_GPIO,uint16_t RS485_PIN)
-{
-  if(ID>=_ATC_MAX_DEVICE)
-    return;
-  ATC[ID].RS485_Ctrl_GPIO = RS485_GPIO;
-  ATC[ID].RS485_Ctrl_Pin = RS485_PIN;
-  HAL_GPIO_WritePin(ATC[ID].RS485_Ctrl_GPIO,ATC[ID].RS485_Ctrl_Pin,GPIO_PIN_RESET);
-  #if(_ATC_DEBUG==1)
-  printf("[%s] Init ATC RS485 Done\r\n",ATC[ID].Name);
-  #endif
-}
-//###################################################################################
+
+/********************************************************************************
+**函数信息 ：
+**功能描述 ：
+**输入参数 ：无
+**输出参数 ：无
+********************************************************************************/
 void StartATCBuffTask(void const *argument)
 {
   while(1)
@@ -220,10 +249,7 @@ void StartATCBuffTask(void const *argument)
               }
             }
           }
-          //------   Search in atcommands answer
-          //++++++  Auto Search String
           ATC_AutoSearch(MX);
-          //------  Auto Search String
           #if (_ATC_DEBUG==2)
           printf("[%s]\r\n%s\r\n",ATC[MX].Name,(char*)ATC[MX].Buff.RxData);
           #endif
@@ -236,4 +262,25 @@ void StartATCBuffTask(void const *argument)
     osDelay(10);
   }
 }
-//###################################################################################
+/********************************************************************************
+**函数信息 ：
+**功能描述 ：Add on usart interrupt routin.
+**输入参数 ：无
+**输出参数 ：无
+********************************************************************************/
+void  ATC_RxCallBack(uint8_t  ID)
+{
+  if(ID>=_ATC_MAX_DEVICE) return;
+  if((ATC[ID].uart->ErrorCode==0) && (ATC[ID].Buff.RxBusy==0))
+  {
+    ATC[ID].Buff.RxTime=HAL_GetTick();
+    if(ATC[ID].Buff.RxIndex < ATC[ID].Buff.RxSize-1)
+    {
+      ATC[ID].Buff.RxData[ATC[ID].Buff.RxIndex]=ATC[ID].Buff.RxTmp;
+      ATC[ID].Buff.RxIndex++;
+    }
+  }
+  HAL_UART_Receive_IT(ATC[ID].uart,&ATC[ID].Buff.RxTmp,1);
+}
+
+/*-------------------------(C) COPYRIGHT 2020 QITAS -------------------------*/
