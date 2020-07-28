@@ -1,19 +1,18 @@
-/**
-********************************************************************************
+/*********************************************************************************
 ****版本：v1.0.0
 ****平台：STM32
 ****日期：2020-07-15
 ****作者：Qitas
-********************************************************************************
-*/
+*********************************************************************************/
 
 #include "ATC.h"
-#include "ATCConfig.h"
+#include "ATConfig.h"
 
 int8_t ATC_ID=-1;
 ATC_t ATC[_ATC_MAX_DEVICE];
 
 osThreadId ATCBuffTaskHandle;
+void StartATCBuffTask(void const * argument);
 
 
 /********************************************************************************
@@ -112,7 +111,7 @@ char * ATC_GetAnswer(uint8_t ID)
 }
 /********************************************************************************
 **函数信息 ：
-**功能描述 ：
+**功能描述 ：用于搜索接收的数据
 **输入参数 ：无
 **输出参数 ：无
 ********************************************************************************/
@@ -165,9 +164,10 @@ void ATC_InitRS485(uint8_t ID,GPIO_TypeDef *RS485_GPIO,uint16_t RS485_PIN)
   printf("[%s] Init ATC RS485 Done\r\n",ATC[ID].Name);
   #endif
 }
+
 /********************************************************************************
-**函数信息 ：
-**功能描述 ：
+**函数信息 ：ATC_Init
+**功能描述 ：初始化ATC任务
 **输入参数 ：无
 **输出参数 ：无
 ********************************************************************************/
@@ -226,6 +226,7 @@ bool ATC_Init(uint8_t ID,char *Name,UART_HandleTypeDef *SelectUart,uint16_t RxSi
 ********************************************************************************/
 void StartATCBuffTask(void const *argument)
 {
+  // ATC_TransmitString(0,"AT\r\n");
   while(1)
   {
     for(uint8_t MX=0 ; MX<_ATC_MAX_DEVICE ; MX++)
@@ -235,7 +236,6 @@ void StartATCBuffTask(void const *argument)
         if((ATC[MX].Buff.RxIndex>0) && ((HAL_GetTick()-ATC[MX].Buff.RxTime)>ATC[MX].Buff.Timeout))
         {
           ATC[MX].Buff.RxBusy=1;
-          //++++++  Search in atcommands answer
           for(uint8_t answ=0 ; answ<_ATC_MAX_SEARCH_PARAMETER_FOR_AT_ANSWER ; answ++)
           {
             if(ATC[MX].Answer[answ][0]!=0)
@@ -259,7 +259,9 @@ void StartATCBuffTask(void const *argument)
         }
       }
     }
-    osDelay(10);
+    osDelay(40);
+    ATC_Send(0,"ATI\r\n",500,1,"OK");
+    ATC_GetAnswer(0);
   }
 }
 /********************************************************************************
