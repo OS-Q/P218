@@ -1,6 +1,6 @@
 {
   "name": "P32",
-  "title": "ST STM32",
+  "title": "ST STM32H",
   "description": "The STM32 family of 32-bit Flash MCUs based on the ARM Cortex-M processor is designed to offer new degrees of freedom to MCU users. It offers a 32-bit product range that combines very high performance, real-time capabilities, digital signal processing, and low-power, low-voltage operation, while maintaining full integration and ease of development.",
   "homepage": "http://www.st.com/web/en/catalog/mmc/FM141/SC1169?sc=stm32",
   "license": "Apache-2.0",
@@ -22,37 +22,22 @@
   "frameworks": {
     "mbed": {
       "package": "framework-mbed",
-      "script": "builder/frameworks/mbed.py",
-      "description": "Arm Mbed OS is an open source embedded operating system designed specifically for the 'things' in the Internet of Things. It includes all the features you need to develop a connected product based on an Arm Cortex-M microcontroller, including security, connectivity, an RTOS and drivers for sensors and I/O devices",
-      "homepage": "https://os.mbed.com/",
-      "title": "Mbed"
+      "script": "extend/frameworks/mbed.py"
     },
     "cmsis": {
       "package": "framework-cmsis",
-      "script": "builder/frameworks/cmsis.py",
-      "description": "The ARM Cortex Microcontroller Software Interface Standard (CMSIS) is a vendor-independent hardware abstraction layer for the Cortex-M processor series and specifies debugger interfaces. The CMSIS enables consistent and simple software interfaces to the processor for interface peripherals, real-time operating systems, and middleware. It simplifies software re-use, reducing the learning curve for new microcontroller developers and cutting the time-to-market for devices",
-      "homepage": "https://developer.arm.com/tools-and-software/embedded/cmsis",
-      "title": "CMSIS"
+      "script": "extend/frameworks/cmsis.py"
     },
     "arduino": {
       "package": "framework-arduinoststm32",
-      "script": "builder/frameworks/arduino.py",
-      "description": "Arduino Wiring-based Framework allows writing cross-platform software to control devices attached to a wide range of Arduino boards to create all kinds of creative coding, interactive objects, spaces or physical experiences",
-      "homepage": "http://arduino.cc/en/Reference/HomePage",
-      "title": "Arduino"
+      "script": "extend/frameworks/arduino.py"
     },
     "stm32cube": {
-      "script": "builder/frameworks/stm32cube.py",
-      "description": "STM32Cube embedded software libraries, including: The HAL hardware abstraction layer, enabling portability between different STM32 devices via standardized API calls; The Low-Layer (LL) APIs, a light-weight, optimized, expert oriented set of APIs designed for both performance and runtime efficiency",
-      "homepage": "https://www.st.com/en/ecosystems/stm32cube.html",
-      "title": "STM32Cube"
+      "script": "extend/frameworks/stm32cube.py"
     },
     "zephyr": {
       "package": "framework-zephyr",
-      "script": "builder/frameworks/zephyr.py",
-      "description": "The Zephyr Project is a scalable real-time operating system (RTOS) supporting multiple hardware architectures, optimized for resource constrained devices, and built with safety and security in mind",
-      "homepage": "https://www.zephyrproject.org",
-      "title": "Zephyr RTOS"
+      "script": "extend/frameworks/zephyr.py"
     }
   },
   "packages": {

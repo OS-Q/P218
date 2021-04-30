@@ -1,16 +1,16 @@
-name: PIO
+name: QIO
 
 on:
   push:
     branches:
-      - pio
+      - qio
     paths:
       - 'boards/**'
-      - 'builder/**'
+      - 'extend/**'
       - 'ldscripts/**'
       - 'examples/**'
-      - 'platform.json'
-      - 'platform.py'
+      - '**.json'
+      - '**.py'
 
 jobs:
   CodeCheck:
@@ -73,8 +73,8 @@ jobs:
       - name: Install package
         run: |
           python -m pip install --upgrade pip
-          pip install -U https://github.com/platformio/platformio/archive/develop.zip
-          pio platform install https://github.com/OS-Q/P32/archive/pio.zip
+          pip install -U https://github.com/OS-Q/M03/releases/latest/download/qio.zip
+          pio platform install https://github.com/OS-Q/P33/archive/qio.zip
 
       - name: Build examples
         id: build
