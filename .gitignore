@@ -4,8 +4,6 @@
 __pycache__
 *.vscode
 *.rst
-*.md
-**/*/README*
 LICENSE*
 *.png
 *.jpg
