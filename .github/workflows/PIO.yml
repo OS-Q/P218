@@ -12,9 +12,6 @@ on:
       - 'platform.json'
       - 'platform.py'
 
-env:
-  UPLOAD_BUILD: true
-
 jobs:
   CodeCheck:
     name: Lint
