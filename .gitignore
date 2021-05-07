@@ -1,6 +1,5 @@
 *.pyc
 .piolibdeps
-.pio
 __pycache__/
 *.vscode/
 *.pio/
@@ -18,5 +17,3 @@ examples/**/*.md
 spl.py
 mxchip.py
 libopencm3
-mxchip.py
-spl.py
