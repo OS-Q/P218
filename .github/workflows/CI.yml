@@ -9,6 +9,7 @@ on:
       - 'extend/**'
       - 'builder/**'
       - 'ldscripts/**'
+      - 'svd/**'
       - 'examples/**'
       - '**.json'
       - '**.py'
