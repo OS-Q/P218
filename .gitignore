@@ -12,7 +12,6 @@ examples/**/*.md
 **/CONTR*
 **/CHANGE*
 .gitmodules
-spl.py
 mxchip.py
 libopencm3
 mxchip.py

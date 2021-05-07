@@ -22,7 +22,7 @@ class P32Platform(PlatformBase):
                 self.frameworks["arduino"]["package"] = "framework-arduino-mbed"
                 self.frameworks["arduino"][
                     "script"
-                ] = "builder/frameworks/arduino-core-mbed.py"
+                ] = "extend/frameworks/arduino-core-mbed.py"
                 self.packages["framework-arduinoststm32"]["optional"] = True
             else:
                 self.packages["toolchain-gccarmnoneeabi"]["version"] = "~1.90201.0"
@@ -55,13 +55,6 @@ class P32Platform(PlatformBase):
         default_protocol = board_config.get("upload.protocol") or ""
         if variables.get("upload_protocol", default_protocol) == "dfu":
             self.packages["tool-dfuutil"]["optional"] = False
-
-        if board == "mxchip_az3166":
-            self.frameworks["arduino"][
-                "package"] = "framework-arduinostm32mxchip"
-            self.frameworks["arduino"][
-                "script"] = "builder/frameworks/arduino/mxchip.py"
-            self.packages["toolchain-gccarmnoneeabi"]["version"] = "~1.60301.0"
 
         if "zephyr" in variables.get("pioframework", []):
             for p in self.packages:
