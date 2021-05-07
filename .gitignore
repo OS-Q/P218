@@ -1,8 +1,8 @@
 *.pyc
 .piolibdeps
-.pio
-__pycache__
-*.vscode
+__pycache__/
+*.vscode/
+*.pio/
 *.rst
 LICENSE*
 *.png
@@ -14,5 +14,3 @@ examples/**/*.md
 .gitmodules
 mxchip.py
 libopencm3
-mxchip.py
-spl.py
