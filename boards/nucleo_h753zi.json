@@ -2,13 +2,10 @@
   "build": {
     "core": "stm32",
     "cpu": "cortex-m7",
-    "extra_flags": "-DSTM32H7xx -DSTM32H745xx",
-    "f_cpu": "480000000L",
-    "mcu": "stm32h745zit6",
-    "product_line": "STM32H745xx",
-    "zephyr": {
-      "variant": "nucleo_h745zi_q_m7"
-    }
+    "extra_flags": "-DSTM32H7xx -DSTM32H753xx",
+    "f_cpu": "400000000L",
+    "mcu": "stm32h753zit6",
+    "product_line": "STM32H753xx"
   },
   "connectivity": [
     "can",
@@ -18,23 +15,22 @@
     "default_tools": [
       "stlink"
     ],
-    "jlink_device": "STM32H745ZI",
+    "jlink_device": "STM32H753ZI",
     "onboard_tools": [
       "stlink"
     ],
-    "openocd_board": "st_nucleo_h745zi",
     "openocd_target": "stm32h7x",
-    "svd_path": "STM32H745_CM7.svd"
+    "svd_path": "STM32H753.svd"
   },
   "frameworks": [
     "cmsis",
     "stm32cube",
     "zephyr"
   ],
-  "name": "ST Nucleo H745ZI-Q",
+  "name": "ST Nucleo H753ZI",
   "upload": {
-    "maximum_ram_size": 524288,
-    "maximum_size": 1048576,
+    "maximum_ram_size": 884736,
+    "maximum_size": 2097152,
     "protocol": "stlink",
     "protocols": [
       "jlink",
@@ -44,6 +40,6 @@
       "mbed"
     ]
   },
-  "url": "https://www.st.com/en/evaluation-tools/nucleo-h745zi-q.html",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-h753zi.html",
   "vendor": "ST"
 }

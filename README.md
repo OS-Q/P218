@@ -1,15 +1,21 @@
-﻿# [P32](https://github.com/OS-Q/P32)
+﻿# [P218](https://github.com/OS-Q/P218)
 
 [![sites](http://182.61.61.133/link/resources/OSQ.png)](http://www.OS-Q.com)
 
-[![Build Status](https://github.com/OS-Q/P32/workflows/CI/badge.svg)](https://github.com/OS-Q/P32/actions/workflows/CI.yml)
-[![Build Status](https://circleci.com/gh/OS-Q/P32.svg?style=svg)](https://circleci.com/gh/OS-Q/P32)
-[![Build Status](https://cloud.drone.io/api/badges/OS-Q/P32/status.svg)](https://cloud.drone.io/OS-Q/P32)
+[![Build Status](https://github.com/OS-Q/P218/workflows/CI/badge.svg)](https://github.com/OS-Q/P218/actions/workflows/CI.yml)
 
-### [简介](https://github.com/OS-Q/P32/wiki)
+### [简介](https://github.com/OS-Q/P218/wiki)
 
-[P32](https://github.com/OS-Q/P32)框架用于高性能 双核 MCU 开发，动态适配平台芯片，统一底层调用框架接口。
+[P218](https://github.com/OS-Q/P218) 用于 [STM32H7](https://www.st.com/zh/microcontrollers-microprocessors/stm32h7-series.html) 系列开发
 
-当前适配芯片： [STM32H](https://www.st.com/zh/microcontrollers-microprocessors/stm32h7-series.html)
 
-### [源圈 OS-Q (Open Source & QA) ](http://www.OS-Q.com)
+| 目标平台 | arduino | cmsis | libopencm3 | mbedos | stm32hal | zephyr |
+| ------- | ------- | ------ | --------- | --------- | --------- | ---------- |
+| [STM32H750IB](https://github.com/SoCXin/STM32H750IB) |  √  |  √  |  X  |  X  |  √  |  X  |
+| [STM32H723ZG](https://github.com/SoCXin/STM32H723ZG) |  X  |  √  |  X  |  X  |  √  |  √  |
+| [STM32H743ZI](https://github.com/SoCXin/STM32H743ZI) |  √  |  √  |  X  |  √  |  √  |  √  |
+| [STM32H745ZI](https://github.com/SoCXin/STM32H745ZI) |  X  |  √  |  X  |  X  |  √  |  √  |
+| [STM32H747XI](https://github.com/SoCXin/STM32H747XI) |  X  |  √  |  √  |  √  |  √  |  √  |
+| [STM32H753ZI](https://github.com/SoCXin/STM32H753ZI) |  X  |  √  |  X  |  X  |  √  |  √  |
+
+#### [源圈OS-Q](http://www.OS-Q.com)

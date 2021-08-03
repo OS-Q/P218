@@ -1,6 +1,6 @@
 {
-  "name": "P32",
-  "title": "ST STM32H MCU",
+  "name": "P218",
+  "title": "OS-Q STM32F4 Family",
   "description": "The STM32 family of 32-bit Flash MCUs based on the ARM Cortex-M processor is designed to offer new degrees of freedom to MCU users. It offers a 32-bit product range that combines very high performance, real-time capabilities, digital signal processing, and low-power, low-voltage operation, while maintaining full integration and ease of development.",
   "homepage": "http://www.st.com/web/en/catalog/mmc/FM141/SC1169?sc=stm32",
   "license": "Apache-2.0",
@@ -18,7 +18,7 @@
     "type": "git",
     "url": "https://github.com/platformio/platform-ststm32.git"
   },
-  "version": "13.0.0",
+  "version": "14.1.0",
   "frameworks": {
     "mbed": {
       "package": "framework-mbed",
@@ -33,6 +33,20 @@
       "description": "The ARM Cortex Microcontroller Software Interface Standard (CMSIS) is a vendor-independent hardware abstraction layer for the Cortex-M processor series and specifies debugger interfaces. The CMSIS enables consistent and simple software interfaces to the processor for interface peripherals, real-time operating systems, and middleware. It simplifies software re-use, reducing the learning curve for new microcontroller developers and cutting the time-to-market for devices",
       "homepage": "https://developer.arm.com/tools-and-software/embedded/cmsis",
       "title": "CMSIS"
+    },
+    "spl": {
+      "package": "framework-spl",
+      "script": "builder/frameworks/spl.py",
+      "description": "The ST Standard Peripheral Library provides a set of functions for handling the peripherals on the STM32 family of microcontrollers.",
+      "homepage": "https://www.st.com/en/embedded-software/stsw-stm8069.html",
+      "title": "Standard Peripheral Library"
+    },
+    "libopencm3": {
+      "package": "framework-libopencm3",
+      "script": "builder/frameworks/libopencm3/libopencm3.py",
+      "description": "The libOpenCM3 framework aims to create a free and open-source firmware library for various ARM Cortex-M0(+)/M3/M4 microcontrollers, including ST STM32, Ti Tiva and Stellaris, NXP LPC, Atmel SAM3, Energy Micro EFM32 and others",
+      "homepage": "http://www.libopencm3.org",
+      "title": "libopencm3"
     },
     "arduino": {
       "package": "framework-arduinoststm32",
@@ -79,147 +93,52 @@
       "type": "framework",
       "optional": true,
       "owner": "platformio",
-      "version": "~2.50501.0"
+      "version": "~2.50501.0",
+      "optionalVersions": [
+        "~2.50700.0"
+      ]
     },
-    "framework-cmsis-stm32h7": {
+    "framework-cmsis-stm32f4": {
       "type": "framework",
       "optional": true,
       "owner": "platformio",
-      "version": "~1.8.0"
+      "version": "~2.6.4"
+    },
+    "framework-spl": {
+      "type": "framework",
+      "optional": true,
+      "owner": "platformio",
+      "version": "~2.10201.0"
+    },
+    "framework-libopencm3": {
+      "type": "framework",
+      "optional": true,
+      "owner": "platformio",
+      "version": "~1.10000.0"
     },
     "framework-arduinoststm32": {
       "type": "framework",
       "optional": true,
       "owner": "platformio",
-      "version": "~4.10900.0"
+      "version": "~4.20000.0"
     },
     "framework-arduino-mbed": {
       "type": "framework",
       "optional": true,
       "owner": "platformio",
-      "version": "~2.0.0"
+      "version": "~2.3.0"
     },
-    "framework-stm32cubeh7": {
+    "framework-stm32cubef4": {
       "type": "framework",
       "optional": true,
       "owner": "platformio",
-      "version": "~1.8.0"
+      "version": "~1.25.0"
     },
     "framework-zephyr": {
       "type": "framework",
       "optional": true,
       "owner": "platformio",
-      "version": "~2.20500.0"
-    },
-    "framework-zephyr-cmsis": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.c3bd2094f9"
-    },
-    "framework-zephyr-canopennode": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.468d350028"
-    },
-    "framework-zephyr-civetweb": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.e6903b80c0"
-    },
-    "framework-zephyr-fatfs": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.1d1fcc725a"
-    },
-    "framework-zephyr-hal-st": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.b52fdbf4b6"
-    },
-    "framework-zephyr-hal-stm32": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.cc8731dba4"
-    },
-    "framework-zephyr-libmetal": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.9d4ee2c3cf"
-    },
-    "framework-zephyr-lvgl": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.31acbaa36e"
-    },
-    "framework-zephyr-mbedtls": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.24d84ecff1"
-    },
-    "framework-zephyr-mcuboot": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.3fc59410b6"
-    },
-    "framework-zephyr-mcumgr": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.43845e883f"
-    },
-    "framework-zephyr-open-amp": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.de1b85a130"
-    },
-    "framework-zephyr-loramac-node": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.3f545d76a2"
-    },
-    "framework-zephyr-openthread": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.1d668284a0"
-    },
-    "framework-zephyr-segger": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.38c79a447e"
-    },
-    "framework-zephyr-sof": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.b5b772dd61"
-    },
-    "framework-zephyr-tinycbor": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.40daca97b4"
-    },
-    "framework-zephyr-tinycrypt": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.3e9a49d267"
-    },
-    "framework-zephyr-littlefs": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.9e4498d1c7"
-    },
-    "framework-zephyr-mipi-sys-t": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.75e671550a"
-    },
-    "framework-zephyr-tfm-mcuboot": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "1.7.0-rc1"
-    },
-    "framework-zephyr-trusted-firmware-m": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "0.0.0-alpha+sha.96340fb6c0"
+      "version": "~2.20600.0"
     },
     "tool-stm32duino": {
       "type": "uploader",
@@ -231,7 +150,7 @@
       "type": "uploader",
       "optional": true,
       "owner": "platformio",
-      "version": "~2.1000.0"
+      "version": "~2.1100.0"
     },
     "tool-jlink": {
       "type": "uploader",

@@ -1,3 +1,27 @@
+# Copyright 2014-present PlatformIO <contact@platformio.org>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""
+STM32Cube HAL
+
+STM32Cube embedded software libraries, including:
+The HAL hardware abstraction layer, enabling portability between different STM32 devices via standardized API calls
+The Low-Layer (LL) APIs, a light-weight, optimized, expert oriented set of APIs designed for both performance and runtime efficiency.
+
+http://www.st.com/en/embedded-software/stm32cube-embedded-software.html?querycriteria=productId=LN1897
+"""
+
 import glob
 import os
 import shutil
@@ -25,18 +49,10 @@ assert all(os.path.isdir(d) for d in (FRAMEWORK_DIR, LDSCRIPTS_DIR))
 
 class CustomLibBuilder(PlatformIOLibBuilder):
 
-    PARSE_SRC_BY_H_NAME = False
-
-    # Max depth of nested includes:
-    # -1 = unlimited
-    # 0 - disabled nesting
-    # >0 - number of allowed nested includes
-    CCONDITIONAL_SCANNER_DEPTH = 0
-
-    # For cases when sources located not only in "src" dir
-    @property
-    def src_dir(self):
-        return self.path
+    def build(self):
+        if self.env.GetBuildType() == "debug":
+            self.env.ConfigureDebugFlags()
+        return PlatformIOLibBuilder.build(self)
 
 
 def generate_ldscript(default_ldscript_path):
@@ -121,13 +137,15 @@ def generate_hal_config_file():
 
 
 def build_custom_lib(lib_path, lib_manifest=None):
+    if not os.path.isdir(lib_path):
+        return
     if board.get("build.stm32cube.disable_embedded_libs", "no") == "yes":
         return
     if lib_path:
         lib_manifest = lib_manifest or {"name": os.path.basename(lib_path)}
         env.Append(
             EXTRA_LIB_BUILDERS=[
-                PlatformIOLibBuilder(env, lib_path, lib_manifest.copy())
+                CustomLibBuilder(env, lib_path, lib_manifest.copy())
             ]
         )
 
@@ -239,8 +257,9 @@ if not board.get("build.ldscript", ""):
 
 bsp_dir = os.path.join(FRAMEWORK_DIR, "Drivers", "BSP")
 components_dir = os.path.join(bsp_dir, "Components")
-for component in os.listdir(components_dir):
-    build_custom_lib(os.path.join(components_dir, component))
+if os.path.isdir(components_dir):
+    for component in os.listdir(components_dir):
+        build_custom_lib(os.path.join(components_dir, component))
 
 if os.path.isdir(os.path.join(bsp_dir, "Adafruit_Shield")):
     build_custom_lib(os.path.join(bsp_dir, "Adafruit_Shield"))
@@ -250,19 +269,25 @@ if os.path.isdir(os.path.join(bsp_dir, "Adafruit_Shield")):
 #
 
 utils_dir = os.path.join(FRAMEWORK_DIR, "Utilities")
-for util in os.listdir(utils_dir):
-    util_dir = os.path.join(utils_dir, util)
-    # Some of utilities is not meant to be built
-    if not any(f.endswith((".c", ".h")) for f in os.listdir(util_dir)):
-        continue
-    build_custom_lib(
-        os.path.join(utils_dir, util),
-        {
-            "name": "Util-%s" % util,
-            "dependencies": [{"name": "FrameworkVariantBSP"}],
-            "build": {"flags": ["-I $PROJECT_SRC_DIR", "-I $PROJECT_INCLUDE_DIR"], "libLDFMode": "deep"},
-        },
-    )
+if os.path.isdir(utils_dir):
+    for util in os.listdir(utils_dir):
+        util_dir = os.path.join(utils_dir, util)
+        # Some of utilities is not meant to be built
+        if not os.path.isdir(util_dir) or not any(
+            f.endswith((".c", ".h")) for f in os.listdir(util_dir)
+        ):
+            continue
+        build_custom_lib(
+            os.path.join(utils_dir, util),
+            {
+                "name": "Util-%s" % util,
+                "dependencies": [{"name": "FrameworkVariantBSP"}],
+                "build": {
+                    "flags": ["-I $PROJECT_SRC_DIR", "-I $PROJECT_INCLUDE_DIR"],
+                    "libLDFMode": "deep",
+                },
+            },
+        )
 
 #
 # USB libraries from ST
