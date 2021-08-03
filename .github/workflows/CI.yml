@@ -10,13 +10,12 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python-version: [3.9]
         example:
-          - "arduino-blink"
-          - "mbed-rtos-blink"
+          # - "arduino-blink"
+          # - "mbed-rtos-blink"
           - "cmsis-blink"
-          - "libopencm3-blink"
+          # - "libopencm3-blink"
           - "stm32cube-hal-blink"
           - "zephyr-blink"
-          - "spl-blink"
 
     runs-on: ${{ matrix.os }}
 
