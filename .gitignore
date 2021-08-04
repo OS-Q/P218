@@ -8,7 +8,6 @@ examples/**/*.md
 **/CONTR*
 **/CHANGE*
 **/*/README*
-LICENSE*
 *.png
 *.jpg
 *.rst

@@ -12,10 +12,10 @@
 | 目标平台 | arduino | cmsis | mbedos | stm32hal | zephyr |
 | ------- | ------- | ------ | --------- | --------- | --------- |
 | [STM32H750IB](https://github.com/SoCXin/STM32H750IB) |  √  |  √  |  X  |  √  |  X  |
-| [STM32H723ZG](https://github.com/SoCXin/STM32H723ZG) |  X  |  √  |  X  |  √  |  √  |
+| [STM32H723ZG](https://github.com/SoCXin/STM32H723ZG) |  X  |  X  |  X  |  √  |  √  |
 | [STM32H743ZI](https://github.com/SoCXin/STM32H743ZI) |  √  |  √  |  √  |  √  |  √  |
-| [STM32H745ZI](https://github.com/SoCXin/STM32H745ZI) |  X  |  √  |  X  |  √  |  √  |
-| [STM32H747XI](https://github.com/SoCXin/STM32H747XI) |  X  |  √  |  √  |  √  |  √  |
 | [STM32H753ZI](https://github.com/SoCXin/STM32H753ZI) |  X  |  √  |  X  |  √  |  √  |
+| [STM32H745ZI](https://github.com/SoCXin/STM32H745ZI) |  X  |  √  |  X  |  √  |  √  |
+| [STM32H747XI](https://github.com/SoCXin/STM32H747XI) |  √  |  √  |  √  |  √  |  √  |
 
 #### [源圈OS-Q](http://www.OS-Q.com)
