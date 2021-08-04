@@ -1,11 +1,6 @@
 #include <Arduino.h>
-#include <SFE_BMP180.h>
-#include <Wire.h>
 
 int pos = 0;    // variable to store the servo position
-
-SFE_BMP180 pressure;
-double baseline; // baseline pressure
 
 #ifndef LED_BUILTIN
 #define LED_BUILTIN PA3
