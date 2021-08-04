@@ -20,8 +20,7 @@ class P218Platform(PlatformBase):
         if "arduino" in frameworks:
             if board.startswith("portenta"):
                 self.frameworks["arduino"]["package"] = "framework-arduino-mbed"
-                self.frameworks["arduino"][
-                    "script"
+                self.frameworks["arduino"]["script"
                 ] = "builder/frameworks/arduino/mbed-core/arduino-core-mbed.py"
                 self.packages["framework-arduinoststm32"]["optional"] = True
             else:
